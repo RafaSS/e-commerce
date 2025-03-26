@@ -1,0 +1,49 @@
+# General Code Style & Formatting
+- Follow the Airbnb Style Guide for code formatting.
+- Use PascalCase for Vue component file names (e.g., UserCard.vue, not user-card.vue).
+- Prefer named exports for components.
+
+# Runtime
+- Use bun for runtime.
+
+# Code Organization
+- Use meaningful variable names.
+- Use comments to explain the purpose of the code.
+
+# Project Structure & Architecture
+- Use Nuxt for server-side rendering.
+- Follow Vue.js patterns and use the App Router.
+- Correctly determine when to use server vs. client components in nuxt.
+
+# Styling & UI
+- Use Tailwind CSS for styling.
+- Use Shadcn UI for components.
+- Use Tailwind CSS for responsive design.
+- The component should be self-contained and reusable.
+
+# Data Fetching & Forms
+- Use Axios for frontend data fetching.
+- Use VeeValidate for form handling.
+- Use Zod for validation.
+
+# State Management & Logic
+- Use Pinia for state management.
+
+# Backend & Database
+- Use Supabase for database access.
+- Generate a SQL schema for database access.
+
+# Authentication
+- Use Supabase for authentication.
+
+# API
+- Use Vite for API development.
+
+# Testing
+- Use Jest for testing.
+
+# Deployment
+- Use Vercel for deployment.
+- Generate a Vercel deployment script.
+
+
