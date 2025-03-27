@@ -6,12 +6,13 @@
           <Icon name="lucide:check" class="h-8 w-8 text-green-600" />
         </div>
       </div>
-      
+
       <h1 class="mb-2 text-2xl font-bold">Order Confirmed!</h1>
       <p class="text-muted-foreground">
-        Your order <span class="font-medium">{{ orderNumber }}</span> has been placed successfully.
+        Your order <span class="font-medium">{{ orderNumber }}</span> has been
+        placed successfully.
       </p>
-      
+
       <div class="mt-8 space-y-4">
         <div class="rounded-md bg-muted p-4 text-left">
           <h3 class="mb-2 font-medium">What happens next?</h3>
@@ -22,7 +23,7 @@
             <li>Your items should arrive within 3-5 business days</li>
           </ol>
         </div>
-        
+
         <div class="grid grid-cols-2 gap-4">
           <NuxtLink to="/products">
             <Button variant="outline" class="w-full">Continue Shopping</Button>
@@ -37,18 +38,18 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
 // Get order number from query params
 const orderNumber = computed(() => {
-  return route.query.order || 'Unknown'
-})
+  return route.query.order || "Unknown";
+});
 
 // If no order number is provided, redirect to home
 onMounted(() => {
   if (!route.query.order) {
-    router.push('/')
+    router.push("/");
   }
-})
+});
 </script>

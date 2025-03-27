@@ -1,6 +1,8 @@
 <template>
   <header class="sticky top-0 z-40 w-full border-b bg-background">
-    <div class="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+    <div
+      class="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0"
+    >
       <div class="flex gap-6 md:gap-10">
         <NuxtLink to="/" class="flex items-center space-x-2">
           <Icon name="lucide:shopping-bag" class="h-6 w-6" />
@@ -37,7 +39,7 @@
           <div v-else class="relative">
             <Button variant="ghost" size="sm" @click="toggleUserMenu">
               <Icon name="lucide:user" class="mr-2 h-4 w-4" />
-              {{ user.email?.split('@')[0] }}
+              {{ user.email?.split("@")[0] }}
               <Icon name="lucide:chevron-down" class="ml-2 h-4 w-4" />
             </Button>
             <div
@@ -45,9 +47,22 @@
               class="absolute right-0 mt-2 w-48 rounded-md bg-background shadow-lg ring-1 ring-black ring-opacity-5"
             >
               <div class="py-1">
-                <NuxtLink to="/profile" class="block px-4 py-2 text-sm hover:bg-muted">Profile</NuxtLink>
-                <NuxtLink to="/orders" class="block px-4 py-2 text-sm hover:bg-muted">Orders</NuxtLink>
-                <a href="#" class="block px-4 py-2 text-sm hover:bg-muted" @click="logout">Logout</a>
+                <NuxtLink
+                  to="/profile"
+                  class="block px-4 py-2 text-sm hover:bg-muted"
+                  >Profile</NuxtLink
+                >
+                <NuxtLink
+                  to="/orders"
+                  class="block px-4 py-2 text-sm hover:bg-muted"
+                  >Orders</NuxtLink
+                >
+                <a
+                  href="#"
+                  class="block px-4 py-2 text-sm hover:bg-muted"
+                  @click="logout"
+                  >Logout</a
+                >
               </div>
             </div>
           </div>
@@ -58,51 +73,59 @@
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from '~/stores/cart'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { useCartStore } from "../stores/cart";
+import { ref, onMounted, onUnmounted } from "vue";
+import { useToast } from "../components/ui/toast";
 
-const cartStore = useCartStore()
-const client = useSupabaseAuthClient()
-const user = useSupabaseUser()
+const toast = useToast();
+
+const cartStore = useCartStore();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 const navItems = [
   {
-    title: 'Home',
-    href: '/',
+    title: "Home",
+    href: "/",
   },
   {
-    title: 'Products',
-    href: '/products',
+    title: "Products",
+    href: "/products",
   },
   {
-    title: 'About',
-    href: '/about',
+    title: "About",
+    href: "/about",
   },
-]
+];
 
-const isUserMenuOpen = ref(false)
+const isUserMenuOpen = ref(false);
 
 const toggleUserMenu = () => {
-  isUserMenuOpen.value = !isUserMenuOpen.value
-}
+  isUserMenuOpen.value = !isUserMenuOpen.value;
+};
 
 const closeUserMenu = (e: MouseEvent) => {
   // Close menu when clicking outside
   if (isUserMenuOpen.value) {
-    isUserMenuOpen.value = false
+    isUserMenuOpen.value = false;
   }
-}
+};
 
 const logout = async () => {
-  await client.auth.signOut()
-  navigateTo('/auth/login')
-}
+  await client.auth.signOut();
+  toast.add({
+    title: "Success",
+    description: "You have been logged out.",
+    type: "success",
+  });
+  navigateTo("/auth/login");
+};
 
 onMounted(() => {
-  document.addEventListener('click', closeUserMenu)
-})
+  document.addEventListener("click", closeUserMenu);
+});
 
 onUnmounted(() => {
-  document.removeEventListener('click', closeUserMenu)
-})
+  document.removeEventListener("click", closeUserMenu);
+});
 </script>

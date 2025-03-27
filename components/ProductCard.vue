@@ -27,20 +27,21 @@
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from '~/stores/cart'
+import { useCartStore } from "../stores/cart";
+import { useToast } from "./ui/toast";
 
 const props = defineProps({
   product: {
     type: Object,
     required: true,
     validator: (p: any) => {
-      return p.id && p.name && p.price && p.image
-    }
-  }
-})
+      return p.id && p.name && p.price && p.image;
+    },
+  },
+});
 
-const cartStore = useCartStore()
-const toast = useToast()
+const cartStore = useCartStore();
+const toast = useToast();
 
 // Add the product to cart
 const addToCart = (product: any) => {
@@ -48,13 +49,14 @@ const addToCart = (product: any) => {
     id: product.id,
     name: product.name,
     price: product.price,
-    image: product.image
-  })
-  
+    image: product.image,
+    added_at: new Date().toISOString(),
+  });
+
   toast.add({
-    title: 'Added to cart',
+    title: "Added to cart",
     description: `${product.name} has been added to your cart.`,
-    duration: 3000
-  })
-}
+    duration: 3000,
+  });
+};
 </script>

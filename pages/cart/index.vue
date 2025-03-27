@@ -2,8 +2,14 @@
   <div class="container py-8">
     <h1 class="mb-6 text-3xl font-bold tracking-tight">Your Shopping Cart</h1>
 
-    <div v-if="cartStore.items.length === 0" class="rounded-lg border p-8 text-center">
-      <Icon name="lucide:shopping-cart" class="mx-auto h-12 w-12 text-muted-foreground" />
+    <div
+      v-if="cartStore.items.length === 0"
+      class="rounded-lg border p-8 text-center"
+    >
+      <Icon
+        name="lucide:shopping-cart"
+        class="mx-auto h-12 w-12 text-muted-foreground"
+      />
       <h3 class="mt-4 text-lg font-medium">Your cart is empty</h3>
       <p class="mt-2 text-sm text-muted-foreground">
         Looks like you haven't added anything to your cart yet.
@@ -28,10 +34,17 @@
                 <div class="w-1/2">
                   <div class="flex items-center">
                     <div class="h-16 w-16 overflow-hidden rounded-md">
-                      <img :src="item.image" :alt="item.name" class="h-full w-full object-cover" />
+                      <img
+                        :src="item.image"
+                        :alt="item.name"
+                        class="h-full w-full object-cover"
+                      />
                     </div>
                     <div class="ml-4">
-                      <NuxtLink :to="`/products/${item.id}`" class="font-medium hover:underline">
+                      <NuxtLink
+                        :to="`/products/${item.id}`"
+                        class="font-medium hover:underline"
+                      >
                         {{ item.name }}
                       </NuxtLink>
                       <Button
@@ -57,7 +70,9 @@
                     >
                       <Icon name="lucide:minus" class="h-3 w-3" />
                     </Button>
-                    <span class="mx-2 w-8 text-center">{{ item.quantity }}</span>
+                    <span class="mx-2 w-8 text-center">{{
+                      item.quantity
+                    }}</span>
                     <Button
                       variant="outline"
                       size="sm"
@@ -105,7 +120,9 @@
 
           <div class="mt-6 space-y-4">
             <div class="space-y-2">
-              <label for="coupon" class="text-sm font-medium">Coupon Code</label>
+              <label for="coupon" class="text-sm font-medium"
+                >Coupon Code</label
+              >
               <div class="flex">
                 <input
                   id="coupon"
@@ -118,97 +135,97 @@
               </div>
             </div>
 
-            <Button 
-              class="w-full" 
-              size="lg" 
+            <Button
+              class="w-full"
+              size="lg"
               @click="proceedToCheckout"
               :disabled="isProcessing"
             >
-              <Icon v-if="isProcessing" name="lucide:loader" class="mr-2 h-4 w-4 animate-spin" />
+              <Icon
+                v-if="isProcessing"
+                name="lucide:loader"
+                class="mr-2 h-4 w-4 animate-spin"
+              />
               Checkout
             </Button>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Toast component for notifications -->
     <Toast />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from '~/stores/cart'
+import { useCartStore } from "../../stores/cart";
+import { useToast } from "../../components/ui/toast";
 
 // Initialize cart
-const cartStore = useCartStore()
-const toast = useToast()
-const user = useSupabaseUser()
+const cartStore = useCartStore();
+const toast = useToast();
+const user = useSupabaseUser();
 
 onMounted(() => {
-  cartStore.initializeCart()
-})
+  cartStore.initializeCart();
+});
 
 // Order summary calculations
 const shipping = computed(() => {
-  return cartStore.totalPrice > 50 ? 0 : 5.99
-})
+  return cartStore.totalPrice > 50 ? 0 : 5.99;
+});
 
 const tax = computed(() => {
-  return cartStore.totalPrice * 0.08 // Assuming 8% tax rate
-})
+  return cartStore.totalPrice * 0.08; // Assuming 8% tax rate
+});
 
 const totalWithTaxAndShipping = computed(() => {
-  return cartStore.totalPrice + shipping.value + tax.value
-})
+  return cartStore.totalPrice + shipping.value + tax.value;
+});
 
 // Form fields
-const couponCode = ref('')
-const isProcessing = ref(false)
+const couponCode = ref("");
+const isProcessing = ref(false);
 
 // Cart actions
 const incrementQuantity = (productId: number) => {
-  const item = cartStore.items.find(item => item.id === productId)
+  const item = cartStore.items.find((item) => item.id === productId);
   if (item) {
-    cartStore.updateQuantity(productId, item.quantity + 1)
+    cartStore.updateQuantity(productId, item.quantity + 1);
   }
-}
+};
 
 const decrementQuantity = (productId: number) => {
-  const item = cartStore.items.find(item => item.id === productId)
+  const item = cartStore.items.find((item) => item.id === productId);
   if (item && item.quantity > 1) {
-    cartStore.updateQuantity(productId, item.quantity - 1)
+    cartStore.updateQuantity(productId, item.quantity - 1);
   }
-}
+};
 
 const removeItem = (productId: number) => {
-  cartStore.removeFromCart(productId)
+  cartStore.removeFromCart(productId);
   toast.add({
-    title: 'Item removed',
-    description: 'The item has been removed from your cart.',
-    duration: 3000
-  })
-}
+    title: "Item removed",
+    description: "The item has been removed from your cart.",
+    duration: 3000,
+  });
+};
 
 const proceedToCheckout = () => {
-  isProcessing.value = true
-  
+  isProcessing.value = true;
+
   // Simulate processing
   setTimeout(() => {
-    isProcessing.value = false
-    
+    isProcessing.value = false;
+
     if (user.value) {
       // If user is logged in, redirect to checkout page
-      navigateTo('/checkout')
+      navigateTo("/checkout");
     } else {
       // If user is not logged in, redirect to login page
-      navigateTo('/auth/login', { 
-        query: { 
-          redirect: '/checkout',
-          message: 'Please log in to complete your purchase'
-        } 
-      })
+      navigateTo("/auth/login");
     }
-  }, 1000)
-}
+  }, 1000);
+};
 </script>
