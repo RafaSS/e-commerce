@@ -16,7 +16,7 @@
     "@pinia/nuxt": "^0.5.1",
     "@vee-validate/nuxt": "^4.12.4",
     "@vee-validate/zod": "^4.12.4",
-    "nuxt": "^3.9.0",
+    "nuxt": "^3.16.1",
     "shadcn-nuxt": "^0.8.1",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.3.3",
