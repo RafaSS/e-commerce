@@ -3,7 +3,7 @@
   "buildCommand": "bun run build",
   "devCommand": "bun run dev",
   "installCommand": "bun install",
-  "framework": "nuxt",
+  "framework": "nuxtjs",
   "builds": [
     {
       "src": "nuxt.config.ts",
