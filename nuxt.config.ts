@@ -1,67 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
+  compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-    "@nuxtjs/supabase",
-    "nuxt-icon",
-    "@vee-validate/nuxt",
-    "shadcn-nuxt",
-  ],
-
-  veeValidate: {
-    autoImports: true,
-    componentNames: {
-      Form: "VeeForm",
-      Field: "VeeField",
-      FieldArray: "VeeFieldArray",
-      ErrorMessage: "VeeErrorMessage",
-    },
-  },
-
+  modules: ["@nuxtjs/tailwindcss", "shadcn-nuxt", "@pinia/nuxt"],
   shadcn: {
     /**
-     * Prefix for component name
+     * Prefix for all the imported components
      */
     prefix: "",
     /**
-     * Directory that the components are located in
+     * Directory that the component lives in.
+     * @default "./components/ui"
      */
     componentDir: "./components/ui",
-    /**
-     * Whether to generate types for the components
-     */
-    aliases: {
-      components: "@/components",
-      utils: "@/lib/utils",
-    },
   },
-
-  supabase: {
-    url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_KEY,
-    redirectOptions: {
-      login: "/auth/login",
-      callback: "/auth/confirm",
-      exclude: ["/", "/products/*", "/cart"],
-    },
-  },
-
-  app: {
-    head: {
-      title: "ShopEase - Your Modern E-Commerce Solution",
-      meta: [
-        {
-          name: "description",
-          content: "A sleek and modern e-commerce application",
-        },
-      ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    },
-  },
-
-  compatibilityDate: "2025-03-27",
 });

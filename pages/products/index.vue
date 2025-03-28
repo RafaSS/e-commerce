@@ -1,383 +1,229 @@
 <template>
-  <div class="container py-8">
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold tracking-tight">All Products</h1>
-      <p class="text-muted-foreground">
-        Browse our collection of high-quality products
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-6 md:flex-row">
-      <!-- Filters Sidebar -->
-      <div class="w-full md:w-64 md:flex-shrink-0">
-        <div class="sticky top-20 rounded-lg border p-4">
-          <h2 class="mb-4 text-lg font-medium">Filters</h2>
-
-          <!-- Categories -->
-          <div class="mb-6">
-            <h3 class="mb-2 text-sm font-medium">Categories</h3>
-            <div class="space-y-2">
-              <label
-                v-for="category in categories"
-                :key="category.id"
-                class="flex items-center"
+  <div>
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-3xl font-bold mb-8">All Products</h1>
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-1">
+          <div class="bg-white p-6 rounded-lg shadow-sm sticky top-4">
+            <h2 class="text-lg font-semibold mb-4">Filter Products</h2>
+            
+            <div class="space-y-4">
+              <div>
+                <label class="text-sm font-medium text-gray-700 mb-1 block">Price Range</label>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="price-all" 
+                      value="all" 
+                      v-model="priceFilter"
+                      class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    />
+                    <label for="price-all" class="ml-2 text-sm text-gray-600">All</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="price-under-100" 
+                      value="under-100" 
+                      v-model="priceFilter"
+                      class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    />
+                    <label for="price-under-100" class="ml-2 text-sm text-gray-600">Under $100</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="price-100-500" 
+                      value="100-500" 
+                      v-model="priceFilter"
+                      class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    />
+                    <label for="price-100-500" class="ml-2 text-sm text-gray-600">$100 - $500</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input 
+                      type="radio" 
+                      id="price-over-500" 
+                      value="over-500" 
+                      v-model="priceFilter"
+                      class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                    />
+                    <label for="price-over-500" class="ml-2 text-sm text-gray-600">Over $500</label>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="pt-4 border-t border-gray-200">
+                <h3 class="text-sm font-medium text-gray-700 mb-1">Categories</h3>
+                <div class="space-y-2 mt-2">
+                  <div v-if="loadingCategories" class="text-sm text-gray-500">Loading...</div>
+                  <div v-else-if="categories.length === 0" class="text-sm text-gray-500">No categories found</div>
+                  <div v-else class="space-y-2">
+                    <div class="flex items-center" v-for="category in categories" :key="category.id">
+                      <input 
+                        type="checkbox" 
+                        :id="`category-${category.id}`" 
+                        :value="category.slug" 
+                        v-model="selectedCategories"
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                      />
+                      <label :for="`category-${category.id}`" class="ml-2 text-sm text-gray-600">{{ category.name }}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="pt-4 border-t border-gray-200">
+                <Button variant="outline" class="w-full" @click="resetFilters">
+                  Reset Filters
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="md:col-span-3">
+          <div class="mb-6 flex justify-between items-center">
+            <p class="text-gray-600">Showing {{ filteredProducts.length }} products</p>
+            <div class="flex items-center space-x-2">
+              <label for="sort" class="text-sm text-gray-600">Sort by:</label>
+              <select 
+                id="sort" 
+                v-model="sortBy"
+                class="text-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
-                <input
-                  type="checkbox"
-                  :value="category.slug"
-                  v-model="selectedCategories"
-                  class="mr-2 h-4 w-4 rounded border-gray-300"
-                />
-                {{ category.name }}
-              </label>
+                <option value="name-asc">Name: A to Z</option>
+                <option value="name-desc">Name: Z to A</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
             </div>
           </div>
-
-          <!-- Price Range -->
-          <div class="mb-6">
-            <h3 class="mb-2 text-sm font-medium">Price Range</h3>
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="sr-only">Min</label>
-                <input
-                  type="number"
-                  min="0"
-                  v-model="priceRange.min"
-                  placeholder="Min"
-                  class="w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-                />
-              </div>
-              <div>
-                <label class="sr-only">Max</label>
-                <input
-                  type="number"
-                  min="0"
-                  v-model="priceRange.max"
-                  placeholder="Max"
-                  class="w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-                />
-              </div>
-            </div>
+          
+          <div v-if="loading" class="text-center py-12">
+            <p class="text-gray-500">Loading products...</p>
           </div>
-
-          <!-- Sort By -->
-          <div class="mb-6">
-            <h3 class="mb-2 text-sm font-medium">Sort By</h3>
-            <select
-              v-model="sortBy"
-              class="w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm"
-            >
-              <option value="default">Featured</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="name-asc">Name: A to Z</option>
-              <option value="name-desc">Name: Z to A</option>
-            </select>
+          <div v-else-if="error" class="text-center py-12">
+            <p class="text-red-500">{{ error }}</p>
           </div>
-
-          <Button @click="applyFilters" class="w-full">Apply Filters</Button>
-          <Button @click="resetFilters" variant="outline" class="mt-2 w-full"
-            >Reset Filters</Button
-          >
-        </div>
-      </div>
-
-      <!-- Products Grid -->
-      <div class="flex-1">
-        <div v-if="isLoading" class="flex justify-center py-12">
-          <div class="text-center">
-            <Icon name="lucide:loader" class="mx-auto h-8 w-8 animate-spin" />
-            <p class="mt-2 text-sm text-muted-foreground">
-              Loading products...
-            </p>
+          <div v-else-if="filteredProducts.length === 0" class="text-center py-12 bg-white rounded-lg shadow-sm">
+            <p class="text-gray-600">No products found matching your criteria.</p>
+            <Button variant="outline" class="mt-4" @click="resetFilters">Reset Filters</Button>
           </div>
-        </div>
-
-        <div
-          v-else-if="filteredProducts.length === 0"
-          class="rounded-lg border p-8 text-center"
-        >
-          <Icon
-            name="lucide:package-x"
-            class="mx-auto h-12 w-12 text-muted-foreground"
-          />
-          <h3 class="mt-4 text-lg font-medium">No products found</h3>
-          <p class="mt-2 text-sm text-muted-foreground">
-            Try adjusting your filters or search criteria.
-          </p>
-          <Button @click="resetFilters" variant="outline" class="mt-4"
-            >Reset Filters</Button
-          >
-        </div>
-
-        <div
-          v-else
-          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          <ProductCard
-            v-for="product in filteredProducts"
-            :key="product.id"
-            :product="product"
-          />
-        </div>
-
-        <!-- Pagination (simplified) -->
-        <div
-          v-if="filteredProducts.length > 0"
-          class="mt-8 flex justify-center"
-        >
-          <div class="flex items-center space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              :disabled="currentPage === 1"
-              @click="currentPage--"
-            >
-              <Icon name="lucide:chevron-left" class="h-4 w-4" />
-              Previous
-            </Button>
-            <span class="text-sm text-muted-foreground">
-              Page {{ currentPage }} of {{ totalPages }}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              :disabled="currentPage === totalPages"
-              @click="currentPage++"
-            >
-              Next
-              <Icon name="lucide:chevron-right" class="h-4 w-4" />
-            </Button>
+          <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ProductCard 
+              v-for="product in filteredProducts" 
+              :key="product.id" 
+              :product="{
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image_url,
+                description: product.description
+              }" 
+              @add-to-cart="addToCart"
+            />
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Toast component for notifications -->
-    <Toast />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
-import { useCartStore } from "../../stores/cart";
+import { ref, computed, onMounted } from 'vue';
+import { useCartStore } from '~/stores/cart';
+import { productService, categoryService, type Product, type Category } from '~/services/supabase';
 
-// Initialize cart
 const cartStore = useCartStore();
-onMounted(() => {
-  cartStore.initializeCart();
-});
+const loading = ref(true);
+const error = ref<string | null>(null);
+const products = ref<Product[]>([]);
+const priceFilter = ref('all');
+const sortBy = ref('name-asc');
 
-// Sample data - in a real app, this would come from Supabase
-// Extended product list
-const allProducts = ref([
-  {
-    id: 1,
-    name: "Premium Wireless Headphones",
-    price: 299.99,
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000",
-    category: "electronics",
-  },
-  {
-    id: 2,
-    name: "Organic Cotton T-Shirt",
-    price: 29.99,
-    image:
-      "https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=387",
-    category: "clothing",
-  },
-  {
-    id: 3,
-    name: "Smart Watch Series 5",
-    price: 399.99,
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=2099",
-    category: "electronics",
-  },
-  {
-    id: 4,
-    name: "Modern Coffee Table",
-    price: 249.99,
-    image:
-      "https://images.unsplash.com/photo-1634712282287-14ed57b9cc89?q=80&w=2126",
-    category: "home",
-  },
-  {
-    id: 5,
-    name: "Designer Sunglasses",
-    price: 129.99,
-    image:
-      "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=2080",
-    category: "accessories",
-  },
-  {
-    id: 6,
-    name: "Ergonomic Office Chair",
-    price: 349.99,
-    image:
-      "https://images.unsplash.com/photo-1505843490578-27522a6a0785?q=80&w=1974",
-    category: "home",
-  },
-  {
-    id: 7,
-    name: "Smartphone Case",
-    price: 24.99,
-    image:
-      "https://images.unsplash.com/photo-1592286927505-1def25115558?q=80&w=2070",
-    category: "accessories",
-  },
-  {
-    id: 8,
-    name: "Wireless Charging Pad",
-    price: 49.99,
-    image:
-      "https://images.unsplash.com/photo-1618424923839-2788d8d1f667?q=80&w=1000",
-    category: "electronics",
-  },
-  {
-    id: 9,
-    name: "Men's Leather Wallet",
-    price: 59.99,
-    image:
-      "https://images.unsplash.com/photo-1603060196912-f6c0c68e3dad?q=80&w=1974",
-    category: "accessories",
-  },
-  {
-    id: 10,
-    name: "Ceramic Plant Pot",
-    price: 34.99,
-    image:
-      "https://images.unsplash.com/photo-1485955900006-10f4d324d411?q=80&w=2072",
-    category: "home",
-  },
-  {
-    id: 11,
-    name: "Denim Jacket",
-    price: 89.99,
-    image:
-      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=2070",
-    category: "clothing",
-  },
-  {
-    id: 12,
-    name: "Wireless Earbuds",
-    price: 149.99,
-    image:
-      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=1932",
-    category: "electronics",
-  },
-]);
-
-const categories = ref([
-  {
-    id: 1,
-    name: "Electronics",
-    slug: "electronics",
-  },
-  {
-    id: 2,
-    name: "Clothing",
-    slug: "clothing",
-  },
-  {
-    id: 3,
-    name: "Home & Kitchen",
-    slug: "home",
-  },
-  {
-    id: 4,
-    name: "Accessories",
-    slug: "accessories",
-  },
-]);
-
-// Filters and sorting state
+// Categories
+const categories = ref<Category[]>([]);
+const loadingCategories = ref(true);
 const selectedCategories = ref<string[]>([]);
-const priceRange = ref({
-  min: null as number | null,
-  max: null as number | null,
+
+// Load products and categories
+onMounted(async () => {
+  try {
+    // Load products
+    loading.value = true;
+    products.value = await productService.getAll();
+    loading.value = false;
+
+    // Load categories
+    loadingCategories.value = true;
+    categories.value = await categoryService.getAll();
+    loadingCategories.value = false;
+  } catch (err: any) {
+    error.value = err.message || 'Failed to load products';
+    loading.value = false;
+    loadingCategories.value = false;
+    console.error('Error loading data:', err);
+  }
 });
-const sortBy = ref("default");
-const isLoading = ref(false);
-const currentPage = ref(1);
-const itemsPerPage = 6;
 
-// Apply filters
-const applyFilters = () => {
-  isLoading.value = true;
-
-  // Simulate API call latency
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 500);
-};
-
-// Reset filters
-const resetFilters = () => {
-  selectedCategories.value = [];
-  priceRange.value = { min: null, max: null };
-  sortBy.value = "default";
-  currentPage.value = 1;
-
-  applyFilters();
-};
-
-// Computed properties for filtered products
+// Filter products based on price range and categories
 const filteredProducts = computed(() => {
-  let result = [...allProducts.value];
-
+  let filtered = [...products.value];
+  
+  // Apply price filter
+  if (priceFilter.value === 'under-100') {
+    filtered = filtered.filter(product => product.price < 100);
+  } else if (priceFilter.value === '100-500') {
+    filtered = filtered.filter(product => product.price >= 100 && product.price <= 500);
+  } else if (priceFilter.value === 'over-500') {
+    filtered = filtered.filter(product => product.price > 500);
+  }
+  
   // Apply category filter
   if (selectedCategories.value.length > 0) {
-    result = result.filter((product) =>
-      selectedCategories.value.includes(product.category)
-    );
+    // In a real app with proper relationships, you'd use a join
+    // For now, we'll simulate this client-side
+    filtered = filtered.filter(product => {
+      // This is a simplified approach - in a real app you'd have category relationships
+      // Let's assume for now each product has one category for simplicity
+      return selectedCategories.value.includes(product.category?.slug);
+    });
   }
-
-  // Apply price range filter
-  if (priceRange.value.min !== null) {
-    result = result.filter((product) => product.price >= priceRange.value.min!);
-  }
-
-  if (priceRange.value.max !== null) {
-    result = result.filter((product) => product.price <= priceRange.value.max!);
-  }
-
+  
   // Apply sorting
-  switch (sortBy.value) {
-    case "price-asc":
-      result.sort((a, b) => a.price - b.price);
-      break;
-    case "price-desc":
-      result.sort((a, b) => b.price - a.price);
-      break;
-    case "name-asc":
-      result.sort((a, b) => a.name.localeCompare(b.name));
-      break;
-    case "name-desc":
-      result.sort((a, b) => b.name.localeCompare(a.name));
-      break;
-    default:
-      // Default sorting - no change
-      break;
-  }
-
-  // Calculate pagination
-  const startIndex = (currentPage.value - 1) * itemsPerPage;
-  return result.slice(startIndex, startIndex + itemsPerPage);
+  filtered.sort((a, b) => {
+    if (sortBy.value === 'name-asc') {
+      return a.name.localeCompare(b.name);
+    } else if (sortBy.value === 'name-desc') {
+      return b.name.localeCompare(a.name);
+    } else if (sortBy.value === 'price-asc') {
+      return a.price - b.price;
+    } else if (sortBy.value === 'price-desc') {
+      return b.price - a.price;
+    }
+    return 0;
+  });
+  
+  return filtered;
 });
 
-// Total pages for pagination
-const totalPages = computed(() => {
-  let filteredCount = allProducts.value.length;
+// Add product to cart
+function addToCart(product: { id: number; name: string; price: number; image: string; }) {
+  cartStore.addItem({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.image
+  });
+}
 
-  // Apply same filters as filteredProducts but without pagination
-  if (selectedCategories.value.length > 0) {
-    filteredCount = allProducts.value.filter((product) =>
-      selectedCategories.value.includes(product.category)
-    ).length;
-  }
-
-  return Math.ceil(filteredCount / itemsPerPage);
-});
+// Reset all filters
+function resetFilters() {
+  priceFilter.value = 'all';
+  sortBy.value = 'name-asc';
+  selectedCategories.value = [];
+}
 </script>

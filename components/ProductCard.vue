@@ -1,62 +1,45 @@
 <template>
-  <div class="group relative overflow-hidden rounded-md border">
-    <div class="aspect-square overflow-hidden bg-secondary">
-      <NuxtLink :to="`/products/${product.id}`">
-        <img
-          :src="product.image"
-          :alt="product.name"
-          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-      </NuxtLink>
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+    <div class="relative pb-[100%]">
+      <img 
+        :src="product.image" 
+        :alt="product.name" 
+        class="absolute top-0 left-0 w-full h-full object-cover"
+      />
     </div>
     <div class="p-4">
-      <h3 class="text-lg font-medium">
-        <NuxtLink :to="`/products/${product.id}`" class="hover:underline">
-          {{ product.name }}
-        </NuxtLink>
-      </h3>
-      <div class="mt-1 flex items-center justify-between">
-        <p class="text-lg font-semibold">${{ product.price.toFixed(2) }}</p>
-        <Button size="sm" @click="addToCart(product)">
-          <Icon name="lucide:shopping-cart" class="mr-1 h-4 w-4" />
-          Add
-        </Button>
+      <h3 class="font-semibold text-lg mb-1">{{ product.name }}</h3>
+      <p class="text-gray-500 text-sm mb-2">{{ truncateDescription(product.description) }}</p>
+      <div class="flex justify-between items-center">
+        <span class="font-bold text-lg">${{ product.price.toFixed(2) }}</span>
+        <Button size="sm" @click="addToCart">Add to Cart</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from "../stores/cart";
-import { useToast } from "./ui/toast";
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+}
 
-const props = defineProps({
-  product: {
-    type: Object,
-    required: true,
-    validator: (p: any) => {
-      return p.id && p.name && p.price && p.image;
-    },
-  },
-});
+const props = defineProps<{
+  product: Product
+}>();
 
-const cartStore = useCartStore();
-const toast = useToast();
+const emit = defineEmits<{
+  (e: 'addToCart', product: Product): void
+}>();
 
-// Add the product to cart
-const addToCart = (product: any) => {
-  cartStore.addToCart({
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    image: product.image,
-    added_at: new Date().toISOString(),
-  });
+function truncateDescription(text: string): string {
+  return text.length > 60 ? `${text.substring(0, 60)}...` : text;
+}
 
-  toast.add({
-    title: "Added to cart",
-    description: `${product.name} has been added to your cart.`,
-    duration: 3000,
-  });
-};
+function addToCart() {
+  emit('addToCart', props.product);
+}
 </script>

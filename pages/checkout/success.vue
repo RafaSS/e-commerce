@@ -1,55 +1,30 @@
 <template>
-  <div class="container mx-auto max-w-2xl py-12">
-    <div class="rounded-lg border bg-card p-8 text-center shadow-sm">
-      <div class="mb-4 flex justify-center">
-        <div class="rounded-full bg-green-100 p-3">
-          <Icon name="lucide:check" class="h-8 w-8 text-green-600" />
-        </div>
+  <div class="max-w-lg mx-auto text-center py-16">
+    <div class="bg-white p-8 rounded-lg shadow-sm">
+      <div class="text-green-500 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
       </div>
-
-      <h1 class="mb-2 text-2xl font-bold">Order Confirmed!</h1>
-      <p class="text-muted-foreground">
-        Your order <span class="font-medium">{{ orderNumber }}</span> has been
-        placed successfully.
-      </p>
-
-      <div class="mt-8 space-y-4">
-        <div class="rounded-md bg-muted p-4 text-left">
-          <h3 class="mb-2 font-medium">What happens next?</h3>
-          <ol class="ml-4 list-decimal space-y-2 text-sm text-muted-foreground">
-            <li>Your order has been received and is being processed</li>
-            <li>You'll receive a confirmation email shortly</li>
-            <li>Once your order ships, we'll send you tracking information</li>
-            <li>Your items should arrive within 3-5 business days</li>
-          </ol>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          <NuxtLink to="/products">
-            <Button variant="outline" class="w-full">Continue Shopping</Button>
-          </NuxtLink>
-          <NuxtLink to="/account/orders">
-            <Button class="w-full">View Order History</Button>
-          </NuxtLink>
-        </div>
+      
+      <h1 class="text-2xl font-bold mb-4">Order Placed Successfully!</h1>
+      <p class="text-gray-600 mb-8">Thank you for your purchase. Your order has been received and is being processed.</p>
+      
+      <div class="border-t border-gray-200 pt-6 mb-6">
+        <p class="text-gray-500 mb-2">Order confirmation has been sent to your email.</p>
+        <p class="text-gray-500">You'll receive updates on your order status.</p>
+      </div>
+      
+      <div class="flex justify-center space-x-4">
+        <Button variant="outline" @click="$router.push('/products')">Continue Shopping</Button>
+        <Button @click="$router.push('/account/orders')">View Orders</Button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
+import { useRouter } from 'vue-router';
+
 const router = useRouter();
-
-// Get order number from query params
-const orderNumber = computed(() => {
-  return route.query.order || "Unknown";
-});
-
-// If no order number is provided, redirect to home
-onMounted(() => {
-  if (!route.query.order) {
-    router.push("/");
-  }
-});
 </script>
