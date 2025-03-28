@@ -19,3 +19,11 @@ logs
 .idea
 
 # Local env files
+.env
+bun.lockb
+
+# Vercel
+.vercel
+.vercel.json
+.vercel/config
+
