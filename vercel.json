@@ -9,17 +9,6 @@
         "Cache-Control": "public, max-age=31536000, immutable"
       },
       "continue": true
-    },
-    {
-      "src": "/_nuxt/(.*)",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      },
-      "continue": true
     }
-  ],
-  "env": {
-    "NUXT_PUBLIC_SUPABASE_URL": "@supabase_url",
-    "NUXT_PUBLIC_SUPABASE_KEY": "@supabase_key"
-  }
+  ]
 }
