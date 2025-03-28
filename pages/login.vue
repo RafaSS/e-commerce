@@ -2,7 +2,9 @@
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "~/stores/auth";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t: $t } = useI18n();
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
@@ -32,9 +34,7 @@ async function handleSubmit() {
       await authStore.signUp(email.value, password.value);
       // Show success message and switch to login form
       isLogin.value = true;
-      alert(
-        "Registration successful! Please check your email for confirmation."
-      );
+      alert($t("common.registrationSuccessful"));
     }
   } catch (error) {
     // Error is already handled in the store
@@ -48,7 +48,7 @@ async function handleSubmit() {
       class="bg-white p-8 rounded-lg shadow-sm dark:bg-gray-800 dark:text-white"
     >
       <h1 class="text-2xl font-bold mb-6 text-center dark:text-white">
-        {{ isLogin ? "Login" : "Create Account" }}
+        {{ isLogin ? $t("common.login") : $t("common.createAccount") }}
       </h1>
 
       <div
@@ -93,26 +93,28 @@ async function handleSubmit() {
           </div>
 
           <Button type="submit" class="w-full" :disabled="authStore.loading">
-            <span v-if="authStore.loading">Processing...</span>
-            <span v-else>{{ isLogin ? "Login" : "Create Account" }}</span>
+            <span v-if="authStore.loading">{{ $t("common.processing") }}</span>
+            <span v-else>{{
+              isLogin ? $t("common.login") : $t("common.createAccount")
+            }}</span>
           </Button>
         </div>
       </form>
 
       <div class="mt-6 text-center text-sm">
         <p v-if="isLogin">
-          Don't have an account?
+          {{ $t("common.dontHaveAccount") }}
           <button
             @click="isLogin = false"
             class="text-blue-600 hover:underline dark:text-blue-400"
           >
-            Sign up
+            {{ $t("common.signUp") }}
           </button>
         </p>
         <p v-else>
-          Already have an account?
+          {{ $t("common.alreadyHaveAccount") }}
           <button @click="isLogin = true" class="text-blue-600 hover:underline">
-            Login
+            {{ $t("common.login") }}
           </button>
         </p>
       </div>

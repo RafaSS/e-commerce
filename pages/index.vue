@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import { useCartStore } from "~/stores/cart";
 import { productService, type Product } from "~/services/supabase";
 
+const themeStore = useThemeStore();
 const cartStore = useCartStore();
 const loading = ref(true);
 const error = ref<string | null>(null);
@@ -45,21 +46,25 @@ function addToCart(product: {
       <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto text-center">
           <h1 class="text-4xl font-bold mb-4 dark:text-white">
-            Welcome to E-Shop
+            {{ $t("common.shopName") }}
           </h1>
           <p class="text-lg text-gray-600 mb-8 dark:text-gray-300">
-            Discover amazing products at unbeatable prices
+            {{ $t("common.shopDescription") }}
           </p>
-          <Button size="lg" @click="$router.push('/products')">Shop Now</Button>
+          <Button size="lg" @click="$router.push('/products')">{{
+            $t("common.shopButton")
+          }}</Button>
         </div>
       </div>
     </section>
 
     <section class="py-16">
       <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold mb-8 text-center">Featured Products</h2>
+        <h2 class="text-3xl font-bold mb-8 text-center">
+          {{ $t("common.featuredProducts") }}
+        </h2>
         <div v-if="loading" class="text-center py-12">
-          <p class="text-gray-500">Loading products...</p>
+          <p class="text-gray-500">{{ $t("common.loadingProducts") }}</p>
         </div>
         <div v-else-if="error" class="text-center py-12">
           <p class="text-red-500">{{ error }}</p>
@@ -82,13 +87,24 @@ function addToCart(product: {
           />
         </div>
         <div class="text-center mt-8">
-          <NuxtLink 
-            to="/products" 
+          <NuxtLink
+            to="/products"
             class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
           >
-            View All Products
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            {{ $t("common.viewAllProducts") }}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 ml-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
             </svg>
           </NuxtLink>
         </div>
@@ -119,10 +135,10 @@ function addToCart(product: {
             </div>
             <div>
               <h3 class="font-semibold text-lg mb-1 dark:text-white">
-                Free Shipping
+                {{ $t("common.freeShipping") }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300">
-                On all orders over $50
+                {{ $t("common.freeShippingDescription") }}
               </p>
             </div>
           </div>
@@ -147,10 +163,10 @@ function addToCart(product: {
             </div>
             <div>
               <h3 class="font-semibold text-lg mb-1 dark:text-white">
-                24/7 Support
+                {{ $t("common.247Support") }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300">
-                Customer support all day
+                {{ $t("common.247SupportDescription") }}
               </p>
             </div>
           </div>
@@ -175,10 +191,10 @@ function addToCart(product: {
             </div>
             <div>
               <h3 class="font-semibold text-lg mb-1 dark:text-white">
-                Secure Payments
+                {{ $t("common.securePayments") }}
               </h3>
               <p class="text-gray-600 dark:text-gray-300">
-                100% secure checkout
+                {{ $t("common.securePaymentsDescription") }}
               </p>
             </div>
           </div>

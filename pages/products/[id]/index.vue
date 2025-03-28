@@ -1,18 +1,25 @@
 <template>
   <div>
     <div v-if="loading" class="text-center py-12">
-      <p class="text-gray-500 dark:text-gray-400">Loading product details...</p>
+      <p class="text-gray-500 dark:text-gray-400">
+        {{ $t("products.loadingProductDetails") }}
+      </p>
     </div>
     <div v-else-if="error" class="text-center py-12">
       <p class="text-red-500">{{ error }}</p>
-      <Button variant="outline" class="mt-4" @click="$router.push('/products')"
-        >Back to Products</Button
+      <Button
+        variant="outline"
+        class="mt-4"
+        @click="$router.push('/products')"
+        >{{ $t("products.backToProducts") }}</Button
       >
     </div>
     <div v-else-if="product" class="max-w-6xl mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm">
+          <div
+            class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm"
+          >
             <img
               :src="
                 product.image_url ||
@@ -25,12 +32,16 @@
         </div>
 
         <div>
-          <h1 class="text-3xl font-bold mb-4 dark:text-white">{{ product.name }}</h1>
+          <h1 class="text-3xl font-bold mb-4 dark:text-white">
+            {{ product.name }}
+          </h1>
           <div class="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-6">
             ${{ product.price.toFixed(2) }}
           </div>
 
-          <p class="text-gray-600 dark:text-gray-300 mb-8">{{ product.description }}</p>
+          <p class="text-gray-600 dark:text-gray-300 mb-8">
+            {{ product.description }}
+          </p>
 
           <div class="flex items-center space-x-4 mb-8">
             <div class="flex items-center space-x-2">
@@ -54,7 +65,9 @@
                 </svg>
               </button>
 
-              <span class="text-gray-700 dark:text-gray-300 w-8 text-center">{{ quantity }}</span>
+              <span class="w-8 text-center dark:text-white">{{
+                quantity
+              }}</span>
 
               <button
                 @click="quantity++"
@@ -77,17 +90,22 @@
               </button>
             </div>
 
-            <Button
-              size="lg"
-              @click="addToCart"
-              :disabled="product.stock_quantity < 1"
-            >
-              {{ product.stock_quantity < 1 ? "Out of Stock" : "Add to Cart" }}
-            </Button>
+            <Button size="lg" @click="addToCart">{{
+              $t("product.addToCart")
+            }}</Button>
+          </div>
+
+          <div
+            v-if="product.stock_quantity < 10 && product.stock_quantity > 0"
+            class="text-orange-600 dark:text-orange-400 mb-8"
+          >
+            {{ $t("products.onlyFewLeft", { count: product.stock_quantity }) }}
           </div>
 
           <div v-if="product.stock_quantity > 0" class="mb-8">
-            <p class="text-sm text-green-600 dark:text-green-400 flex items-center">
+            <p
+              class="text-sm text-green-600 dark:text-green-400 flex items-center"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 mr-1"
@@ -102,11 +120,14 @@
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              In stock ({{ product.stock_quantity }} available)
+              {{ $t("products.inStock") }} ({{ product.stock_quantity }}
+              {{ $t("products.available") }})
             </p>
           </div>
 
-          <div class="border-t border-gray-200 dark:border-gray-700 pt-8 space-y-4">
+          <div
+            class="border-t border-gray-200 dark:border-gray-700 pt-8 space-y-4"
+          >
             <div class="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -122,9 +143,14 @@
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <span class="text-gray-600 dark:text-gray-300"
-                >Free shipping on orders over $50</span
-              >
+              <span class="text-gray-600 dark:text-gray-300">
+                {{ $t("products.inStock") }}:
+                {{
+                  product.stock_quantity > 0
+                    ? $t("common.yes")
+                    : $t("common.no")
+                }}
+              </span>
             </div>
             <div class="flex items-center">
               <svg
@@ -138,10 +164,12 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M5 13l4 4L19 7"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              <span class="text-gray-600 dark:text-gray-300">30-day money-back guarantee</span>
+              <span class="text-gray-600 dark:text-gray-300">
+                {{ $t("products.freeShipping") }}
+              </span>
             </div>
             <div class="flex items-center">
               <svg
@@ -155,10 +183,12 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M5 13l4 4L19 7"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                 />
               </svg>
-              <span class="text-gray-600 dark:text-gray-300">Secure checkout</span>
+              <span class="text-gray-600 dark:text-gray-300">
+                {{ $t("products.secureTransaction") }}
+              </span>
             </div>
           </div>
         </div>
@@ -168,7 +198,9 @@
         v-if="!loadingRelatedProducts && relatedProducts.length > 0"
         class="mt-16"
       >
-        <h2 class="text-2xl font-bold mb-8 dark:text-white">Related Products</h2>
+        <h2 class="text-2xl font-bold mb-8 dark:text-white">
+          {{ $t("products.relatedProducts") }}
+        </h2>
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
@@ -195,7 +227,9 @@ import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCartStore } from "~/stores/cart";
 import { productService, type Product } from "~/services/supabase";
+import { useI18n } from "vue-i18n";
 
+const { t: $t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const cartStore = useCartStore();

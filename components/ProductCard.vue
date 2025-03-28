@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 interface Product {
   id: number;
@@ -49,14 +52,17 @@ function navigateToProduct() {
       <h3 class="font-semibold text-lg mb-1 dark:text-white">
         {{ product.name }}
       </h3>
-      <p class="text-gray-500 dark:text-gray-300 text-sm mb-2">
+      <p class="text-gray-600 text-sm mb-3 dark:text-gray-300">
         {{ truncateDescription(product.description) }}
       </p>
-      <div class="flex justify-between items-center">
-        <span class="font-bold text-lg dark:text-white"
-          >${{ product.price.toFixed(2) }}</span
+      <div class="flex items-center justify-between">
+        <span class="font-bold dark:text-white">${{ product.price.toFixed(2) }}</span>
+        <button
+          @click.stop="addToCart"
+          class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded-md text-sm transition-colors"
         >
-        <Button size="sm" @click="addToCart">Add to Cart</Button>
+          {{ t("product.addToCart") }}
+        </button>
       </div>
     </div>
   </div>

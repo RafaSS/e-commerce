@@ -34,12 +34,12 @@ export default defineNuxtConfig({
     ],
     defaultLocale: "pt",
     strategy: "prefix_except_default",
-    lazy: true,
+    lazy: false,
     langDir: "locales/",
     detectBrowserLanguage: {
       useCookie: false,
       cookieKey: "i18n_redirected",
-      redirectOn: "root",
     },
+    baseUrl: "http://localhost:3000",
   },
 });

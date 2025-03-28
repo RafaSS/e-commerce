@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="max-w-7xl mx-auto">
-      <h1 class="text-3xl font-bold mb-8 dark:text-white">All Products</h1>
+      <h1 class="text-3xl font-bold mb-8 dark:text-white">{{ $t("products.allProducts") }}</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="md:col-span-1">
@@ -9,14 +9,14 @@
             class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm sticky top-4 transition-colors"
           >
             <h2 class="text-lg font-semibold mb-4 dark:text-white">
-              Filter Products
+              {{ $t("products.filterProducts") }}
             </h2>
 
             <div class="space-y-4">
               <div>
                 <label
                   class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 block"
-                  >Price Range</label
+                  >{{ $t("products.priceRange") }}</label
                 >
                 <div class="space-y-2">
                   <div class="flex items-center">
@@ -30,7 +30,7 @@
                     <label
                       for="price-all"
                       class="ml-2 text-sm text-gray-600 dark:text-gray-300"
-                      >All</label
+                      >{{ $t("products.all") }}</label
                     >
                   </div>
                   <div class="flex items-center">
@@ -44,7 +44,7 @@
                     <label
                       for="price-under-100"
                       class="ml-2 text-sm text-gray-600 dark:text-gray-300"
-                      >Under $100</label
+                      >{{ $t("products.under100") }}</label
                     >
                   </div>
                   <div class="flex items-center">
@@ -58,7 +58,7 @@
                     <label
                       for="price-100-500"
                       class="ml-2 text-sm text-gray-600 dark:text-gray-300"
-                      >$100 - $500</label
+                      >{{ $t("products.price100to500") }}</label
                     >
                   </div>
                   <div class="flex items-center">
@@ -72,7 +72,7 @@
                     <label
                       for="price-over-500"
                       class="ml-2 text-sm text-gray-600 dark:text-gray-300"
-                      >Over $500</label
+                      >{{ $t("products.over500") }}</label
                     >
                   </div>
                 </div>
@@ -82,20 +82,20 @@
                 <h3
                   class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
-                  Categories
+                  {{ $t("products.categories") }}
                 </h3>
                 <div class="space-y-2 mt-2">
                   <div
                     v-if="loadingCategories"
                     class="text-sm text-gray-500 dark:text-gray-400"
                   >
-                    Loading...
+                    {{ $t("products.loading") }}
                   </div>
                   <div
                     v-else-if="categories.length === 0"
                     class="text-sm text-gray-500 dark:text-gray-400"
                   >
-                    No categories found
+                    {{ $t("products.noCategories") }}
                   </div>
                   <div v-else class="space-y-2">
                     <div
@@ -122,7 +122,7 @@
 
               <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
                 <Button variant="outline" class="w-full" @click="resetFilters">
-                  Reset Filters
+                  {{ $t("products.resetFilters") }}
                 </Button>
               </div>
             </div>
@@ -132,27 +132,27 @@
         <div class="md:col-span-3">
           <div class="mb-6 flex justify-between items-center">
             <p class="text-gray-600 dark:text-gray-300">
-              Showing {{ filteredProducts.length }} products
+              {{ $t("products.showingProducts", { count: filteredProducts.length }) }}
             </p>
             <div class="flex items-center space-x-2">
               <label for="sort" class="text-sm text-gray-600 dark:text-gray-300"
-                >Sort by:</label
+                >{{ $t("products.sortBy") }}:</label
               >
               <select
                 id="sort"
                 v-model="sortBy"
                 class="text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="name-asc">Name: A to Z</option>
-                <option value="name-desc">Name: Z to A</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">{{ $t("products.nameAsc") }}</option>
+                <option value="name-desc">{{ $t("products.nameDesc") }}</option>
+                <option value="price-asc">{{ $t("products.priceAsc") }}</option>
+                <option value="price-desc">{{ $t("products.priceDesc") }}</option>
               </select>
             </div>
           </div>
 
           <div v-if="loading" class="text-center py-12">
-            <p class="text-gray-500 dark:text-gray-400">Loading products...</p>
+            <p class="text-gray-500 dark:text-gray-400">{{ $t("products.loadingProducts") }}</p>
           </div>
           <div v-else-if="error" class="text-center py-12">
             <p class="text-red-500">{{ error }}</p>
@@ -162,10 +162,10 @@
             class="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow-sm transition-colors"
           >
             <p class="text-gray-600 dark:text-gray-300">
-              No products found matching your criteria.
+              {{ $t("products.noProductsFound") }}
             </p>
             <Button variant="outline" class="mt-4" @click="resetFilters"
-              >Reset Filters</Button
+              >{{ $t("products.resetFilters") }}</Button
             >
           </div>
           <div
@@ -194,13 +194,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useCartStore } from "~/stores/cart";
-import {
-  productService,
-  categoryService,
-  type Product,
-  type Category,
-} from "~/services/supabase";
+import { productService, categoryService, type Product, type Category } from "~/services/supabase";
+import { useI18n } from "vue-i18n";
 
+const { t: $t } = useI18n();
 const cartStore = useCartStore();
 const loading = ref(true);
 const error = ref<string | null>(null);

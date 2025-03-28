@@ -18,26 +18,27 @@
         </svg>
       </div>
 
-      <h1 class="text-2xl font-bold mb-4 dark:text-white">Order Placed Successfully!</h1>
+      <h1 class="text-2xl font-bold mb-4 dark:text-white">{{ $t("checkout.orderSuccess") }}</h1>
       <p class="text-gray-600 dark:text-gray-300 mb-8">
-        Thank you for your purchase. Your order has been received and is being
-        processed.
+        {{ $t("checkout.thankYouMessage") }}
       </p>
 
       <div class="border-t border-gray-200 dark:border-gray-700 pt-6 mb-6">
         <p class="text-gray-500 dark:text-gray-400 mb-2">
-          Order confirmation has been sent to your email.
+          {{ $t("checkout.emailConfirmation") }}
         </p>
         <p class="text-gray-500 dark:text-gray-400">
-          You'll receive updates on your order status.
+          {{ $t("checkout.orderUpdates") }}
         </p>
       </div>
 
       <div class="flex justify-center space-x-4">
-        <Button variant="outline" @click="$router.push('/products')"
-          >Continue Shopping</Button
-        >
-        <Button @click="$router.push('/account/orders')">View Orders</Button>
+        <Button variant="outline" @click="$router.push('/products')">
+          {{ $t("common.continueShopping") }}
+        </Button>
+        <Button @click="$router.push('/account/orders')">
+          {{ $t("checkout.viewOrders") }}
+        </Button>
       </div>
     </div>
   </div>
@@ -45,6 +46,8 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const router = useRouter();
+const { t: $t } = useI18n();
 </script>
