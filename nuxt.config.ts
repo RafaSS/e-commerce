@@ -32,14 +32,19 @@ export default defineNuxtConfig({
       { code: "pt", iso: "pt-BR", file: "pt.json", name: "Português" },
       { code: "en", iso: "en-US", file: "en.json", name: "English" },
     ],
-    defaultLocale: "pt",
+    defaultLocale: "en",
     strategy: "prefix_except_default",
-    lazy: false,
+    lazy: true,
     langDir: "locales/",
     detectBrowserLanguage: {
-      useCookie: false,
+      useCookie: true,
       cookieKey: "i18n_redirected",
+      alwaysRedirect: false,
+      fallbackLocale: "en",
     },
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3000/",
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
   },
 });

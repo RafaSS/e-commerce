@@ -85,7 +85,9 @@
     "secureCheckout": "Secure checkout",
     "relatedProducts": "Related Products",
     "productDetails": "Product Details",
-    "loadingDetails": "Loading product details..."
+    "loadingDetails": "Loading product details...",
+    "viewCart": "View Cart",
+    "productAddedToCart": "Product added to cart. View cart now?"
   },
   "products": {
     "allProducts": "All Products",

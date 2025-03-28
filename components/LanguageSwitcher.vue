@@ -17,6 +17,7 @@ const currentLocaleName = computed(() => {
 
 function switchLanguage(localeCode: "pt" | "en") {
   locale.value = localeCode;
+
   isOpen.value = false;
   console.log(locale.value, locales.value);
 }

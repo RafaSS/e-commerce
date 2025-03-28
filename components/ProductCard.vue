@@ -56,10 +56,12 @@ function navigateToProduct() {
         {{ truncateDescription(product.description) }}
       </p>
       <div class="flex items-center justify-between">
-        <span class="font-bold dark:text-white">${{ product.price.toFixed(2) }}</span>
+        <span class="font-bold dark:text-white"
+          >${{ product.price.toFixed(2) }}</span
+        >
         <button
           @click.stop="addToCart"
-          class="bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded-md text-sm transition-colors"
+          class="bg-white dark:bg-gray-950 hover:bg-blue-700 text-white py-1 px-3 rounded-md text-sm transition-colors"
         >
           {{ t("product.addToCart") }}
         </button>

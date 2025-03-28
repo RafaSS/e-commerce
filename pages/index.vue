@@ -2,8 +2,8 @@
 import { ref, onMounted } from "vue";
 import { useCartStore } from "~/stores/cart";
 import { productService, type Product } from "~/services/supabase";
-
-const themeStore = useThemeStore();
+import { useI18n } from "vue-i18n";
+const { t: $t } = useI18n();
 const cartStore = useCartStore();
 const loading = ref(true);
 const error = ref<string | null>(null);

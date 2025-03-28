@@ -1,9 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { useCartStore } from "~/stores/cart";
 import { useAuthStore } from "~/stores/auth";
 import { useThemeStore } from "~/stores/theme";
 import { onMounted } from "vue";
 import LanguageSwitcher from "~/components/LanguageSwitcher.vue";
+import { useI18n } from "vue-i18n";
+const { t: $t } = useI18n();
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
@@ -50,7 +52,7 @@ async function logout() {
           $t("common.shopName")
         }}</NuxtLink>
         <div class="flex items-center space-x-4">
-          <LanguageSwitcher />
+          <!-- <LanguageSwitcher /> -->
           <button
             @click="themeStore.toggleTheme"
             class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -178,7 +180,7 @@ async function logout() {
               {{ $t("common.shopName") }}
             </h3>
             <p class="text-gray-600 dark:text-gray-400">
-              Your one-stop shop for all your needs.
+              {{ $t("common.shopDescription") }}
             </p>
           </div>
           <div>

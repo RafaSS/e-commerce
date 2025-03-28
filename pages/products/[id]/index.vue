@@ -120,8 +120,8 @@
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              {{ $t("products.inStock") }} ({{ product.stock_quantity }}
-              {{ $t("products.available") }})
+              {{ $t("product.inStock") }} ({{ product.stock_quantity }}
+              {{ $t("product.available") }})
             </p>
           </div>
 
@@ -144,7 +144,7 @@
                 />
               </svg>
               <span class="text-gray-600 dark:text-gray-300">
-                {{ $t("products.inStock") }}:
+                {{ $t("product.inStock") }}:
                 {{
                   product.stock_quantity > 0
                     ? $t("common.yes")
@@ -168,7 +168,7 @@
                 />
               </svg>
               <span class="text-gray-600 dark:text-gray-300">
-                {{ $t("products.freeShipping") }}
+                {{ $t("product.freeShipping") }}
               </span>
             </div>
             <div class="flex items-center">
@@ -187,7 +187,7 @@
                 />
               </svg>
               <span class="text-gray-600 dark:text-gray-300">
-                {{ $t("products.secureTransaction") }}
+                {{ $t("product.secureTransaction") }}
               </span>
             </div>
           </div>
@@ -199,7 +199,7 @@
         class="mt-16"
       >
         <h2 class="text-2xl font-bold mb-8 dark:text-white">
-          {{ $t("products.relatedProducts") }}
+          {{ $t("product.relatedProducts") }}
         </h2>
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
@@ -287,7 +287,7 @@ function addToCart() {
     }
 
     // Show notification or redirect to cart
-    if (confirm("Product added to cart. View cart now?")) {
+    if (confirm($t("product.productAddedToCart"))) {
       router.push("/cart");
     }
   }

@@ -85,7 +85,8 @@
     "secureCheckout": "Pagamento seguro",
     "relatedProducts": "Produtos Relacionados",
     "productDetails": "Detalhes do Produto",
-    "loadingDetails": "Carregando detalhes do produto..."
+    "loadingDetails": "Carregando detalhes do produto...",
+    "productAddedToCart": "Produto adicionado ao carrinho. Ver carrinho agora?"
   },
   "products": {
     "allProducts": "Todos os Produtos",
@@ -112,7 +113,8 @@
     "freeShipping": "Frete grátis",
     "secureTransaction": "Transação segura",
     "onlyFewLeft": "Apenas {count} unidades em estoque",
-    "inStock": "Em estoque"
+    "inStock": "Em estoque",
+    "productAddedToCart": "Produto adicionado ao carrinho. Ver carrinho agora?"
   },
   "productList": {
     "allProducts": "Todos os Produtos",
@@ -135,7 +137,7 @@
     "priceHighLow": "Preço: Maior para Menor",
     "loadingProducts": "Carregando produtos...",
     "noProductsFound": "Nenhum produto encontrado com seus critérios.",
-
+    "productAddedToCart": "Produto adicionado ao carrinho. Ver carrinho agora?",
     "outOfStock": "Fora de estoque"
   },
   "cart": {
