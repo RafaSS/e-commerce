@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       { code: "pt", iso: "pt-BR", file: "pt.json", name: "Português" },
       { code: "en", iso: "en-US", file: "en.json", name: "English" },
     ],
-    defaultLocale: "en",
+    defaultLocale: "pt",
     strategy: "prefix_except_default",
     lazy: true,
     langDir: "locales/",
@@ -40,7 +40,7 @@ export default defineNuxtConfig({
       useCookie: true,
       cookieKey: "i18n_redirected",
       alwaysRedirect: false,
-      fallbackLocale: "en",
+      fallbackLocale: "pt",
     },
     baseUrl: "http://localhost:3000/",
     bundle: {
