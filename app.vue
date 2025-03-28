@@ -50,7 +50,7 @@ async function logout() {
           $t("common.shopName")
         }}</NuxtLink>
         <div class="flex items-center space-x-4">
-          <!-- <LanguageSwitcher /> -->
+          <LanguageSwitcher />
           <button
             @click="themeStore.toggleTheme"
             class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
