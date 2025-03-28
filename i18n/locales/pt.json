@@ -1,0 +1,92 @@
+{
+  "common": {
+    "shopName": "E-Shop"
+  },
+  "home": {
+    "welcome": "Bem-vindo à E-Shop",
+    "discover": "Descubra produtos incríveis a preços imbatíveis",
+    "shopNow": "Comprar Agora",
+    "featuredProducts": "Produtos em Destaque",
+    "loading": "Carregando produtos...",
+    "benefits": {
+      "freeShipping": "Frete Grátis",
+      "freeShippingDesc": "Em todos os pedidos acima de $50",
+      "support": "Suporte 24/7",
+      "supportDesc": "Atendimento ao cliente o dia todo",
+      "securePayments": "Pagamentos Seguros",
+      "securePaymentsDesc": "Checkout 100% seguro"
+    }
+  },
+  "navigation": {
+    "home": "Início",
+    "products": "Produtos",
+    "cart": "Carrinho",
+    "login": "Entrar",
+    "myAccount": "Minha Conta",
+    "orders": "Pedidos",
+    "profile": "Perfil",
+    "logout": "Sair"
+  },
+  "product": {
+    "addToCart": "Adicionar ao Carrinho",
+    "outOfStock": "Sem Estoque",
+    "inStock": "Em estoque",
+    "available": "disponíveis",
+    "freeShipping": "Frete grátis para pedidos acima de $50",
+    "moneyBack": "Garantia de devolução em 30 dias",
+    "secureCheckout": "Pagamento seguro",
+    "relatedProducts": "Produtos Relacionados",
+    "productDetails": "Detalhes do Produto",
+    "loadingDetails": "Carregando detalhes do produto..."
+  },
+  "productList": {
+    "allProducts": "Todos os Produtos",
+    "filterProducts": "Filtrar Produtos",
+    "priceRange": "Faixa de Preço",
+    "all": "Todos",
+    "under100": "Menos de $100",
+    "between100And500": "$100 - $500",
+    "over500": "Acima de $500",
+    "categories": "Categorias",
+    "loadingCategories": "Carregando...",
+    "noCategories": "Nenhuma categoria encontrada",
+    "resetFilters": "Redefinir Filtros",
+    "showing": "Mostrando",
+    "products": "produtos",
+    "sortBy": "Ordenar por:",
+    "nameAZ": "Nome: A a Z",
+    "nameZA": "Nome: Z a A",
+    "priceLowHigh": "Preço: Menor para Maior",
+    "priceHighLow": "Preço: Maior para Menor",
+    "loadingProducts": "Carregando produtos...",
+    "noProductsFound": "Nenhum produto encontrado com seus critérios."
+  },
+  "cart": {
+    "yourCart": "Seu Carrinho de Compras",
+    "emptyCart": "Seu carrinho está vazio",
+    "emptyCartDesc": "Parece que você ainda não adicionou nenhum produto ao seu carrinho.",
+    "continueShopping": "Continuar Comprando",
+    "orderSummary": "Resumo do Pedido",
+    "subtotal": "Subtotal",
+    "items": "itens",
+    "shipping": "Frete",
+    "free": "Grátis",
+    "total": "Total",
+    "checkout": "Finalizar Compra",
+    "decrease": "Diminuir quantidade",
+    "increase": "Aumentar quantidade",
+    "remove": "Remover"
+  },
+  "checkoutSuccess": {
+    "orderPlaced": "Pedido Realizado com Sucesso!",
+    "thankYou": "Obrigado pela sua compra. Seu pedido foi recebido e está sendo processado.",
+    "emailConfirmation": "A confirmação do pedido foi enviada para seu e-mail.",
+    "updates": "Você receberá atualizações sobre o status do seu pedido.",
+    "viewOrders": "Ver Pedidos"
+  },
+  "footer": {
+    "links": "Links",
+    "contact": "Contato",
+    "allRightsReserved": "Todos os direitos reservados."
+  }
+}

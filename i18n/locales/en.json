@@ -1,0 +1,92 @@
+{
+  "common": {
+    "shopName": "E-Shop"
+  },
+  "home": {
+    "welcome": "Welcome to E-Shop",
+    "discover": "Discover amazing products at unbeatable prices",
+    "shopNow": "Shop Now",
+    "featuredProducts": "Featured Products",
+    "loading": "Loading products...",
+    "benefits": {
+      "freeShipping": "Free Shipping",
+      "freeShippingDesc": "On all orders over $50",
+      "support": "24/7 Support",
+      "supportDesc": "Customer support all day",
+      "securePayments": "Secure Payments",
+      "securePaymentsDesc": "100% secure checkout"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Shopping Cart",
+    "login": "Login",
+    "myAccount": "My Account",
+    "orders": "Orders",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock",
+    "inStock": "In stock",
+    "available": "available",
+    "freeShipping": "Free shipping on orders over $50",
+    "moneyBack": "30-day money-back guarantee",
+    "secureCheckout": "Secure checkout",
+    "relatedProducts": "Related Products",
+    "productDetails": "Product Details",
+    "loadingDetails": "Loading product details..."
+  },
+  "productList": {
+    "allProducts": "All Products",
+    "filterProducts": "Filter Products",
+    "priceRange": "Price Range",
+    "all": "All",
+    "under100": "Under $100",
+    "between100And500": "$100 - $500",
+    "over500": "Over $500",
+    "categories": "Categories",
+    "loadingCategories": "Loading...",
+    "noCategories": "No categories found",
+    "resetFilters": "Reset Filters",
+    "showing": "Showing",
+    "products": "products",
+    "sortBy": "Sort by:",
+    "nameAZ": "Name: A to Z",
+    "nameZA": "Name: Z to A",
+    "priceLowHigh": "Price: Low to High",
+    "priceHighLow": "Price: High to Low",
+    "loadingProducts": "Loading products...",
+    "noProductsFound": "No products found matching your criteria."
+  },
+  "cart": {
+    "yourCart": "Your Shopping Cart",
+    "emptyCart": "Your cart is empty",
+    "emptyCartDesc": "Looks like you haven't added any products to your cart yet.",
+    "continueShopping": "Continue Shopping",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "items": "items",
+    "shipping": "Shipping",
+    "free": "Free",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "remove": "Remove"
+  },
+  "checkoutSuccess": {
+    "orderPlaced": "Order Placed Successfully!",
+    "thankYou": "Thank you for your purchase. Your order has been received and is being processed.",
+    "emailConfirmation": "Order confirmation has been sent to your email.",
+    "updates": "You'll receive updates on your order status.",
+    "viewOrders": "View Orders"
+  },
+  "footer": {
+    "links": "Links",
+    "contact": "Contact",
+    "allRightsReserved": "All rights reserved."
+  }
+}
